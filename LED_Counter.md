@@ -13,6 +13,8 @@ Create a simple binary counter that illuminates LEDs sequentially with every but
 - Breadboard
 - Power source (like an Arduino or a simple battery setup)
 
+![chip](breadboard.png)
+
 ## Steps:
 
 ### 1. Setting up the 74HC595:
