@@ -5,7 +5,7 @@ Arduino, Raspberry and BreadBoard Projects
 
 Build an Arduino-powered robot car that can be controlled via voice commands. Additionally, this robot features obstacle avoidance capabilities using an ultrasonic sensor.
 
-![Robot Car Photo](img1.jpg)
+![Robot Car Photo](robot.png)
 
 ## Components
 1. Arduino UNO board
@@ -28,6 +28,7 @@ Build an Arduino-powered robot car that can be controlled via voice commands. Ad
 - Connect the motors to the motor driver and then to the respective pins on the Arduino.
 - Set up the HC-SR04 Ultrasonic Sensor & the Elechouse Module
 
+![Connections](connections.png)
 
 ### 3. Voice Recognition v3 Module Setup
 Follow the guide from [Elechouse](https://www.elechouse.com/product/speak-recognition-voice-recognition-module-v3/) to connect and set up the module.
@@ -36,7 +37,9 @@ Follow the guide from [Elechouse](https://www.elechouse.com/product/speak-recogn
 
 1. **Library Setup**: Install the `VoiceRecognitionV3` library via the Arduino IDE Library Manager.
 2. **Voice Training**: Train the Voice Recognition module to recognize your commands - 'forward', 'backward', 'stop', and 'autopilot'.
-3. **Code Upload**: Upload the provided code to the Arduino.
+3. **Code Upload**: Upload the provided code to the Arduino in this repo.
+4. Connect Bluetooth Controller
+![controller](connect_bl_control.png)
 
 ## Usage
 
@@ -48,7 +51,7 @@ Follow the guide from [Elechouse](https://www.elechouse.com/product/speak-recogn
 ## Contribute
 Feel free to modify, distribute, and enhance this project! Feedback and improvements are always welcomed.
 
-
+![video](video1.mov)
 
 # CV Drone Build
 
