@@ -30,9 +30,9 @@ Create a simple binary counter that illuminates LEDs sequentially with every but
    
    b. From the other terminal of the button:
    
-       - Connect it to one leg of the 10kΩ resistor. The other leg of this resistor should connect to Ground.
+   - Connect it to one leg of the 10kΩ resistor. The other leg of this resistor should connect to Ground.
        
-       - Also, connect it to the positive terminal of the 10µF capacitor. The negative terminal of this capacitor should be connected to Pin 14 (DS - Data Input) of the 74HC595.
+   - Also, connect it to the positive terminal of the 10µF capacitor. The negative terminal of this capacitor should be connected to Pin 14 (DS - Data Input) of the 74HC595.
        
    c. Also, from the same terminal of the button (the one not connected to +5V), connect a jumper wire to Pin 11 (SH_CP - Shift Register Clock Pin) of the 74HC595.
 
