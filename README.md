@@ -5,7 +5,7 @@ Arduino, Raspberry and BreadBoard Projects
 
 Build an Arduino-powered robot car that can be controlled via voice commands. Additionally, this robot features obstacle avoidance capabilities using an ultrasonic sensor.
 
-![Robot Car Photo](robot.png)
+![Robot Car Photo](robot1.png)
 
 ## Components
 1. Arduino UNO board
