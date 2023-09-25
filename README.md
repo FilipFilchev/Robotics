@@ -58,6 +58,13 @@ Feel free to modify, distribute, and enhance this project! Feedback and improvem
 
 ## Building a Raspberry Pi obstacle avoidance drone with computer vision, flight controller hat, voice assistance, speech to text algorithm, 4G connection for remote control, and a Python-backend:
 
+
+![drone](img10.png)
+
+![drone](img11.png)
+
+![drone](img12.png)
+
 ### Hardware setup:
 
 - Assemble the drone frame and attach the flight controller hat (such as the Navio2 or Pixhawk).
