@@ -9,6 +9,8 @@ Arduino, Raspberry and BreadBoard Projects
 
 ## FPV Drone Build
 
+### How to set up: [FPV Drone Setup Guide](config_requirements.md)
+
 ![drone](imgfpv0.png)
 
 ![drone](imgfpv1.png)
