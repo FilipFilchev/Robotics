@@ -11,9 +11,9 @@ Arduino, Raspberry and BreadBoard Projects
 
 ### How to set up: [FPV Drone Setup Guide](config_requirements.md)
 
-![drone](imgfpv0.png)
-
 ![drone](imgfpv1.png)
+
+![drone](imgfpv0.png)
 
 ![drone](imgfpv2.png)
 
