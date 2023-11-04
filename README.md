@@ -3,11 +3,11 @@ Arduino, Raspberry and BreadBoard Projects
 
 ## Table of Contents
 - [Building FPV Drones](#fpv-drone-build)
-- [Arduino Robot Car UltraSonic](#configuring-authentication)
-- [AI Drone Build](#Robot-Car-with-Obstacle-Avoidance-and-VA)
+- [Arduino Robot Car UltraSonic](#robot-car-with-obstacle-avoidance-and-va)
+- [AI Drone Build](#cv-drone-build)
 
 
-#FPV Drone Build
+## FPV Drone Build
 
 ![drone](imgfpv0.png)
 
@@ -15,7 +15,7 @@ Arduino, Raspberry and BreadBoard Projects
 
 ![drone](imgfpv2.png)
 
-# Robot Car with Obstacle Avoidance and VA
+## Robot Car with Obstacle Avoidance and VA
 
 Build an Arduino-powered robot car that can be controlled via voice commands. Additionally, this robot features obstacle avoidance capabilities using an ultrasonic sensor.
 
@@ -67,7 +67,7 @@ Feel free to modify, distribute, and enhance this project! Feedback and improvem
 
 ![video](video1.mov)
 
-# CV Drone Build
+## CV Drone Build
 
 ## Building a Raspberry Pi computer vision powered drone with autonomous flight assistant mode, flight controller hat, voice assistance, speech to text algorithm, 4G hat for remote control, and a Python-backend:
 
