@@ -2,10 +2,376 @@
 Arduino, Raspberry and BreadBoard Projects
 
 ## Table of Contents
+- [MindStorms EV3 System](#mindstorms-ev3)
+- [RaspberryPi & Jevois Smart Cam](#raspberry-jevois)
 - [Building FPV Drones](#fpv-drone-build)
 - [Arduino Robot Car UltraSonic](#robot-car-with-obstacle-avoidance-and-va)
 - [AI Drone Build](#cv-drone-build)
 
+
+## Mindstorms EV3 System Documentation
+
+**This documentation elaborates on two separate EV3 brick systems:**
+
+1. Carrier Line Follower: A robotic system that autonomously follows a line and responds to color cues (via light reflection sensor ).
+2. Sorting Conveyor and Lift: A conveyor belt system with sorting capabilities based on color recognition, ultrasonic detection and a timed lift mechanism.
+
+# 1. Carrier Line Follower
+The Carrier Line Follower is designed to autonomously navigate a path marked by a line, using color cues for specific maneuvers like turning, slowing or stopping.
+
+*Code Logic*
+
+##Initialization:
+
+- EV3 Brick: Serves as the brain of the robot.
+- Motors: Two motors are initialized for the left and right wheels, controlling the robot's movement.
+- Color Sensor: Detects the color of the surface beneath it, crucial for line following and decision-making.
+- Drive Base: Combines the two motors and the wheel diameters for coordinated movement.
+- DRIVE_SPEED: Sets the robot's forward speed.
+##Functions:
+-  turnRight90(): Executes a 90-degree right turn, including a beep sound as a signal. The waiting times and motor speeds are adjusted to achieve the turn.
+-  slowDown(): Reduces the robot's speed and emits a beep sound, signifying a change in pace.
+-  stopMoving(): Immediately halts the robot.
+
+##Main Loop:
+
+- Continuously reads the color detected by the sensor.
+- Line Following Logic: can be the other way around or with PID of deviation between the light reflection values from the brick, but in the release case - the carrier is simply adjusting the turning rate between the colors white/black (for better performance)
+- - On white surfaces, the robot slightly turns left.
+- - On black surfaces, it slightly turns right.
+- Color-Based Actions:
+- - Red: Initiates a 90-degree right turn.
+- - Blue: Slows down the robot.
+- - Green: Stops the robot and ends the loop.
+
+
+#Full Code
+
+```
+#!/usr/bin/env pybricks-micropython
+
+from pybricks.ev3devices import Motor, ColorSensor
+from pybricks.parameters import Port, Color
+from pybricks.tools import wait
+from pybricks.robotics import DriveBase
+from pybricks.hubs import EV3Brick
+
+# Initialize
+#EV3 brick
+ev3 = EV3Brick()
+# motors.
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
+# color sensor.
+line_sensor = ColorSensor(Port.S3)
+# drive base.
+robot = DriveBase(left_motor, right_motor, wheel_diameter=80, axle_track=96)
+
+# Set the drive speed.
+DRIVE_SPEED = 120
+
+# Adjust the proportional gain. - not in use anymore, because of changing from PID of deviation between the light reflection values from the brick to simply adjusting the turning rate between the colors white/black (better performance)
+#PROPORTIONAL_GAIN = 2
+
+# Function to stop the robot's movement.
+def stopMoving():
+    robot.stop()
+
+# Function to turn the robot right by approximately 90 degrees.
+def turnRight90():
+    stopMoving()
+    ev3.speaker.beep(frequency=600, duration=300)
+    wait(100)
+    left_motor.run(150)
+    right_motor.run(150)
+    wait(300)
+    left_motor.run(200)
+    right_motor.run(-200)
+    wait(1000)  # Adjust time as needed. To turn properly
+    stopMoving()
+
+def slowDown():
+    ev3.speaker.beep(frequency=600, duration=300)
+    # wait(100)
+    left_motor.run(200)
+    right_motor.run(200)
+    wait(300)
+    stopMoving()
+    ev3.speaker.beep(frequency=600, duration=300)
+
+# Start following the line continuesly.
+while True:
+
+    # Read the detected color from the sensor in color-based mode.
+    detected_color = line_sensor.color()
+
+    #stay in line
+    if detected_color == Color.WHITE:
+        robot.drive(DRIVE_SPEED, -20)
+    elif detected_color == Color.BLACK:
+        robot.drive(DRIVE_SPEED, 20)
+
+    # Check for red color and turn right.
+    elif detected_color == Color.RED:
+        turnRight90()
+        continue
+
+    # Check for blue color and slow down.   *CALIBRATE FOR BLUE from parameters
+    if detected_color == Color.BLUE:
+        slowDown()
+        continue
+
+    # Check for green color and stop.
+    elif detected_color == Color.GREEN:
+        ev3.speaker.beep(frequency=200, duration=200)
+        stopMoving()
+        break
+
+
+    wait(10)
+
+
+
+
+"""Old method
+BLACK = 1
+WHITE = 86
+threshold = (BLACK + WHITE) / 2
+
+# Start following the line continuesly.
+while True:
+    # Read the reflection value from the sensor for line following.
+    current_reflection = line_sensor.reflection()
+
+    # Read the detected color from the sensor for color-based actions.
+    detected_color = line_sensor.color()
+
+    # Check for blue color and turn right.
+    if detected_color == Color.BLUE:
+        turnRight90()
+        continue
+
+    # Check for green color and stop.
+    if detected_color == Color.GREEN:
+        stopMoving()
+        break
+
+    # Calculate the deviation from the threshold for line following.
+    error = current_reflection - threshold
+    integral += error
+    derivative = error - last_error
+    turn_rate = PROPORTIONAL_GAIN * error + INTEGRAL_GAIN * integral + DERIVATIVE_GAIN * derivative
+    last_error = error
+
+    # Adjust robot movement based on the line following logic.
+    robot.drive(DRIVE_SPEED, turn_rate)
+
+    # Short wait or other actions.
+    wait(10)"""
+
+```
+
+# 2. Sorting Conveyor
+
+##System Description
+This system sorts objects using a conveyor belt mechanism based on their color, detected by a color sensor. After a fixed duration, a lift mechanism is activated and the whole system is stopped.
+
+##Detailed Code Logic
+###Initialization:
+
+- Motors: Separate motors for the conveyor, cube pusher, and  mechanism.
+- Sensors: A color sensor for detecting object colors and an ultrasonic sensor for carrier proximity detection.
+- Conveyor, cube pusher and lift speed is set.
+- Alignment delay is set
+- Duration of each motor operating time is set.
+- MAX_DISTANCE: Determines the activation distance for the system.
+- Carrier Check Initial State is set to False
+- Timer Initial State is set to False
+###Functions:
+
+- lift(): Activates the lift mechanism after a set time.
+- Main Loop:
+- - Carrier Detection: Uses the ultrasonic sensor to detect the presence of a carrier within a specified distance.
+- - Conveyor Operation: When a carrier is detected, the conveyor starts moving.
+- - Color Detection and Sorting:
+Scans the object's color on the conveyor.
+If a black object is detected, a pusher mechanism is activated to sort the object.
+- - Timer Check: After 40 seconds from the conveyor start, the lift mechanism is activated, and the loop ends.
+
+
+#Full Code
+
+```
+#!/usr/bin/env pybricks-micropython
+
+from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
+from pybricks.parameters import Port, Color
+from pybricks.tools import wait
+from pybricks.hubs import EV3Brick
+import time
+
+# Initialize EV3 brick
+ev3 = EV3Brick()
+
+# Initialize the motors and sensors.
+conveyor_motor = Motor(Port.A)
+pusher_motor = Motor(Port.B)
+lift_motor = Motor(Port.C)
+# Initialize the color sensor.
+color_sensor = ColorSensor(Port.S3)
+# Init UltraSonic Sensor.
+ultra_sensor = UltrasonicSensor(Port.S4)
+
+# Conveyor, pusher, lift, ultrasonic and timer presets.
+CONVEYOR_SPEED = -150 # Speed of the conveyor belt
+PUSHER_SPEED = 800 #Speed of black cube pusher
+PUSHER_RETURN_SPEED = -800 # Speed to return the pusher to starting position
+PUSHER_DURATION = 550 # Duration for which the pusher motor runs
+ALIGNMENT_DELAY = 920 # Delay for cube alignment
+LIFT_DURATION = 3200
+LIFT_SPEED = 200
+MAX_DISTANCE = 200 #Max distance of carrier from conveyor in mm before it starts the system and count down
+carrierCheck = False
+timerStarted = False
+
+#lift function after timout (40secs)
+def lift():
+    ev3.speaker.beep(frequency=800, duration=100)
+    lift_motor.run(LIFT_SPEED)
+    wait(LIFT_DURATION)
+
+# Main loop for the conveyor system.
+while True:
+     #check for carrier nearby (20cm)
+    if ultra_sensor.distance() < MAX_DISTANCE:
+        carrierCheck = True
+
+        #check if timer has started in order to start it initially
+        if not timerStarted:
+            start_time = time.time()
+            timerStarted = True
+
+    #Start the system when carrier arrives
+    if carrierCheck:
+        #start conveyor motor
+        conveyor_motor.run(CONVEYOR_SPEED)
+        #checking colors via light reflection sensor
+        current_color = color_sensor.color()
+        if current_color in [Color.RED, Color.GREEN, Color.BLUE]:
+            ev3.speaker.beep(frequency=800, duration=100)
+
+        # Activate the pusher to move the cube.
+        if current_color == Color.BLACK:    #to calibrate config the parameters
+            ev3.speaker.beep(frequency=50, duration=400)
+            wait(ALIGNMENT_DELAY)
+            pusher_motor.run_time(PUSHER_SPEED, PUSHER_DURATION)
+            pusher_motor.run_time(PUSHER_RETURN_SPEED, PUSHER_DURATION)
+
+     # Check if 40 seconds have passed
+    if timerStarted and time.time() - start_time > 40:
+        ev3.speaker.beep(frequency=200, duration=200)
+        lift()
+        break # Break out of the loop after 40 seconds
+
+    wait(10)  # Small delay for the loop
+
+
+"""Previous version
+#!/usr/bin/env pybricks-micropython
+
+from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
+from pybricks.parameters import Port, Color
+from pybricks.parameters import Port
+from pybricks.tools import wait
+from pybricks.hubs import EV3Brick
+import time
+
+
+# Initialize EV3 brick
+ev3 = EV3Brick()
+
+
+
+# Initialize the motors.
+conveyor_motor = Motor(Port.A)  # Motor for the conveyor belt
+pusher_motor = Motor(Port.B)    # Motor for pushing the cube
+
+# Initialize the color sensor.
+color_sensor = ColorSensor(Port.S3)
+# Init UltraSonic Sensor.
+ultra_sensor = UltrasonicSensor(Port.S4)
+
+# Initialize lift the motor.
+lift_motor = Motor(Port.C)  # Motor for the lift
+
+LIFT_DURATION = 3200
+LIFT_SPEED = 200
+
+# Conveyor and pusher settings.
+CONVEYOR_SPEED = -150  # Speed of the conveyor belt
+PUSHER_SPEED = 800    # Increased speed for a faster push
+PUSHER_RETURN_SPEED = -800  # Speed to return the pusher to starting position
+PUSHER_DURATION = 550 # Duration for which the pusher motor runs
+ALIGNMENT_DELAY = 920 # Delay for cube alignment
+
+#Max distance of carrier from conveyor in mm
+MAX_DISTANCE = 200
+carrierCheck = False
+
+def lift():
+    ev3.speaker.beep(frequency=800, duration=100)
+    lift_motor.run(LIFT_SPEED)
+    wait(LIFT_DURATION)
+
+# Init the start time
+start_time = time.time()
+
+# Main loop for the conveyor system.
+while True:
+
+    # Check if 40 seconds have passed
+    if time.time() - start_time > 40:
+        ev3.speaker.beep(frequency=200, duration=200)
+        lift()
+        break  # Break out of the loop after 40 seconds
+
+    #check for carrier nearby (10cm)
+    if ultra_sensor.distance() < MAX_DISTANCE:
+        carrierCheck = True
+
+    #check for carrier nearby (10cm)
+    if carrierCheck == True:
+
+        # Start the conveyor motor.
+        conveyor_motor.run(CONVEYOR_SPEED)
+
+        # Read the reflection value from the sensor.
+        current_color = color_sensor.color()
+
+        if current_color == Color.RED or current_color == Color.GREEN or current_color==Color.BLUE:
+            ev3.speaker.beep(frequency=800, duration=100)
+
+
+        # Check if the reflection indicates a black surface.
+        if current_color == Color.BLACK:
+            ev3.speaker.beep(frequency=50, duration=400)
+            # Wait for the cube to align with the pusher.
+            wait(ALIGNMENT_DELAY)
+
+            # Activate the pusher to move the cube.
+            pusher_motor.run_time(PUSHER_SPEED, PUSHER_DURATION)
+            #wait(PUSHER_DURATION)
+
+            # Return the pusher to its starting position.
+            pusher_motor.run_time(PUSHER_RETURN_SPEED, PUSHER_DURATION)
+            #wait(PUSHER_DURATION)
+
+        wait(10)  # Small delay for the loop"""
+
+
+```
+
+## Raspberry Pi + Jevois System -> find more in repo /RaspberryPi_Jevois
 
 ## FPV Drone Build
 
