@@ -11,29 +11,31 @@ Arduino, Raspberry and BreadBoard Projects
 
 ## Mindstorms EV3 System Documentation
 
+![mindstorm](mindstorm.png)
+
 **This documentation elaborates on two separate EV3 brick systems:**
 
 1. Carrier Line Follower: A robotic system that autonomously follows a line and responds to color cues (via light reflection sensor ).
 2. Sorting Conveyor and Lift: A conveyor belt system with sorting capabilities based on color recognition, ultrasonic detection and a timed lift mechanism.
 
-# 1. Carrier Line Follower
+## 1. Carrier Line Follower
 The Carrier Line Follower is designed to autonomously navigate a path marked by a line, using color cues for specific maneuvers like turning, slowing or stopping.
 
 *Code Logic*
 
-##Initialization:
+## Initialization:
 
 - EV3 Brick: Serves as the brain of the robot.
 - Motors: Two motors are initialized for the left and right wheels, controlling the robot's movement.
 - Color Sensor: Detects the color of the surface beneath it, crucial for line following and decision-making.
 - Drive Base: Combines the two motors and the wheel diameters for coordinated movement.
 - DRIVE_SPEED: Sets the robot's forward speed.
-##Functions:
+## Functions:
 -  turnRight90(): Executes a 90-degree right turn, including a beep sound as a signal. The waiting times and motor speeds are adjusted to achieve the turn.
 -  slowDown(): Reduces the robot's speed and emits a beep sound, signifying a change in pace.
 -  stopMoving(): Immediately halts the robot.
 
-##Main Loop:
+## Main Loop:
 
 - Continuously reads the color detected by the sensor.
 - Line Following Logic: can be the other way around or with PID of deviation between the light reflection values from the brick, but in the release case - the carrier is simply adjusting the turning rate between the colors white/black (for better performance)
@@ -171,13 +173,13 @@ while True:
 
 ```
 
-# 2. Sorting Conveyor
+## 2. Sorting Conveyor
 
-##System Description
+## System Description
 This system sorts objects using a conveyor belt mechanism based on their color, detected by a color sensor. After a fixed duration, a lift mechanism is activated and the whole system is stopped.
 
-##Detailed Code Logic
-###Initialization:
+## Detailed Code Logic
+### Initialization:
 
 - Motors: Separate motors for the conveyor, cube pusher, and  mechanism.
 - Sensors: A color sensor for detecting object colors and an ultrasonic sensor for carrier proximity detection.
@@ -187,7 +189,7 @@ This system sorts objects using a conveyor belt mechanism based on their color, 
 - MAX_DISTANCE: Determines the activation distance for the system.
 - Carrier Check Initial State is set to False
 - Timer Initial State is set to False
-###Functions:
+### Functions:
 
 - lift(): Activates the lift mechanism after a set time.
 - Main Loop:
@@ -199,7 +201,7 @@ If a black object is detected, a pusher mechanism is activated to sort the objec
 - - Timer Check: After 40 seconds from the conveyor start, the lift mechanism is activated, and the loop ends.
 
 
-#Full Code
+### Full Code
 
 ```
 #!/usr/bin/env pybricks-micropython
@@ -372,6 +374,8 @@ while True:
 ```
 
 ## Raspberry Pi with Jevois System 
+![jevoisbot](jevoisbot.png)
+![raspberry](pi.png)
 ### -> find more in repo ../RaspberryPi_Jevois
 
 ## FPV Drone Build
