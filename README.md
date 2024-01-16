@@ -2,8 +2,8 @@
 Arduino, Raspberry and BreadBoard Projects
 
 ## Table of Contents
-- [MindStorms EV3 System](#mindstorms-ev3)
-- [RaspberryPi & Jevois Smart Cam](#raspberry-jevois)
+- [MindStorms EV3 System](#Mindstorms-EV3-System-Documentation)
+- [RaspberryPi & Jevois Smart Cam](#Raspberry-Pi-with-Jevois-System )
 - [Building FPV Drones](#fpv-drone-build)
 - [Arduino Robot Car UltraSonic](#robot-car-with-obstacle-avoidance-and-va)
 - [AI Drone Build](#cv-drone-build)
@@ -371,7 +371,8 @@ while True:
 
 ```
 
-## Raspberry Pi + Jevois System -> find more in repo /RaspberryPi_Jevois
+## Raspberry Pi with Jevois System 
+### -> find more in repo ../RaspberryPi_Jevois
 
 ## FPV Drone Build
 
