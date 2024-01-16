@@ -377,6 +377,7 @@ while True:
 ![jevoisbot](jevoisbot.png)
 ![raspberry](pi.png)
 ### -> find more in repo ../RaspberryPi_Jevois
+https://github.com/FilipFilchev/RaspberryPi_Jevois/tree/main
 
 ## FPV Drone Build
 
