@@ -7,6 +7,7 @@ Arduino, Raspberry and BreadBoard Projects
 - [Building FPV Drones](#fpv-drone-build)
 - [Arduino Robot Car UltraSonic](#robot-car-with-obstacle-avoidance-and-va)
 - [AI Drone Build](#cv-drone-build)
+- [SpiderBot Project](#spider-bot-folder)
 
 
 ## Mindstorms EV3 System Documentation
