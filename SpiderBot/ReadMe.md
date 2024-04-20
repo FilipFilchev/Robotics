@@ -50,3 +50,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - This is not a master-slave communication its an server-client based project
 - The master device is connected to the robot via the flask server script and the ulr is forwarded to the React App via Ngrok
 - Post requests are sent to the master that decodes and sends serial data to the HC-06 slave module
+- https://www.instructables.com/DIY-Spider-Robot-PART-II-Remote-control/
