@@ -1,7 +1,6 @@
 /* -----------------------------------------------------------------------------
-  - Project: Remote control Crawling robot
+  - Project: Crawling robot
   - Author:  panerqiang@sunfounder.com
-  - Date:  2015/1/27
    -----------------------------------------------------------------------------
   - Overview
   - This project was written for the Crawling robot desigened by Sunfounder.

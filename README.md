@@ -7,7 +7,7 @@ Arduino, Raspberry and BreadBoard Projects
 - [Building FPV Drones](#fpv-drone-build)
 - [Arduino Robot Car UltraSonic](#robot-car-with-obstacle-avoidance-and-va)
 - [AI Drone Build](#cv-drone-build)
-- [SpiderBot Project](#spider-bot-folder)
+- [SpiderBot Project](#SpiderBot)
 
 
 ## Mindstorms EV3 System Documentation
@@ -528,3 +528,9 @@ Collect user feedback and iterate on both the frontend(interface) and backend(co
 - Integrate satellite communication if necessary (this might be complex and requires specific modules).
 - Autopilot can be implemented with your own model and reinforcement learning instead of using libraries like DroneKit.
 - Object avoidance can be achieved using ultrasonic sensors & Lidar connected to the Pi. The AFAS (Advanced Flight Assistance System) will require additional programming and integration, ensuring that it works in tandem with the flight controller.
+
+
+## SpiderBot
+- Go to dir: ./SpiderBot
+- Or check out the web app here: https://spider-bot-70184.web.app/
+![spiderbot](SpiderBot-QR.jpg)
