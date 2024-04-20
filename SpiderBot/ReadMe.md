@@ -1,6 +1,13 @@
 # Spider Robot Controller
 
-This web application allows you to control a spider robot via Bluetooth, using the Master Bluetooth device to communicate with an HC-06 Bluetooth module attached to the Arduino Nano.
+This web application allows you to control a spider robot via Web App, using the Master Bluetooth device to communicate with an HC-06 Bluetooth module attached to the Arduino Nano.
+
+![spiderbot](img1.jpeg)
+
+![spiderbot](img2.jpeg)
+
+### Scan QR to access the app
+![spiderbot](SpiderBot-QR.jpg)
 
 ## Prerequisites
 
