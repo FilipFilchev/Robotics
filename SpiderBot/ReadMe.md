@@ -2,9 +2,9 @@
 
 This web application allows you to control a spider robot via Web App, using the Master Bluetooth device to communicate with an HC-06 Bluetooth module attached to the Arduino Nano.
 
-![spiderbot](img1.jpeg)
+![spiderbot](img1.jpg)
 
-![spiderbot](img2.jpeg)
+![spiderbot](img2.jpg)
 
 ### Scan QR to access the app
 ![spiderbot](SpiderBot-QR.jpg)
@@ -12,12 +12,13 @@ This web application allows you to control a spider robot via Web App, using the
 ## Prerequisites
 
 - Your spider robot hw, with the HC-06 Bluetooth module correctly set up and paired with your Arduino.
+- The Arduino Code should be compiled and uploaded to the Arduino Nano board
 
 ## Setup
 
 1. Clone the repository to your local machine.
 2. npx create-react-app your-name-here
-3. Navigate to the project directory.
+3. Navigate to the project directory and add the src files.
 4. Install the necessary dependencies.
 5. Run the app in development mode with npm start.
 6. deploy to firebase with npm run build & firebase deploy
